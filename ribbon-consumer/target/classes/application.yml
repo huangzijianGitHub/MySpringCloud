@@ -1,0 +1,87 @@
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://user:123456@127.0.0.1:8900/eureka/
+server:
+  port: 8902
+spring:
+  application:
+    name: ribbon-consumer
+  freemarker:
+    cache: false
+  datasource:
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: demo_user
+    password: gtis
+    # ??druid ???
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 10
+    minIdle: 10
+    maxActive: 50
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    removeAbandoned: true
+    removeAbandonedTimeout: 1800
+    logAbandoned: true
+    filters: stat
+  redis:
+      #redis ????? ???0
+      database: 0
+      # Redis?????
+      host: 127.0.0.1
+      # Redis???????
+      port: 6379
+      pool:
+        # ????????????????????
+        max-active: 8
+        # ???????????????????????
+        max-wait: -1
+        # ???????????
+        max-idle: 8
+        # ???????????
+        min-idle: 0
+      # ??????????
+      timeout:
+
+mybatis-plus:
+  # ???????package?????????
+  type-aliases-package: com.hzj.ribbon.consumer.ribbonconsumer.entity
+  mapper-locations: classpath:mybatis/*.xml
+  global-config:
+      #????  0:"???ID??", 1:"????ID",2:"????ID (??????ID)", 3:"????ID UUID";
+      id-type: 0
+      #???? 0:"????",1:"? NULL ??"),2:"????"
+      field-strategy: 2
+      auto-set-db-type: true
+      #???????
+      db-column-underline: true
+      #??mapper ????
+      refresh-mapper: false
+      #??????????
+      #capital-mode: true
+      #?????????
+      #key-generator: com.baomidou.springboot.xxx
+      #??????
+      #logic-delete-value: 0
+      #logic-not-delete-value: 1
+      #???????????
+      #meta-object-handler: com.baomidou.springboot.xxx
+      #???SQL???
+      #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+      map-underscore-to-camel-case: true
+      cache-enabled: false
+#???sql
+logging.level.com.hzj.ribbon.consumer.ribbonconsumer.mapper: debug
+
+
+feign.hystrix.enabled: true
